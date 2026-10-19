@@ -1,27 +1,70 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Samuel HUANG 黃同榮 — 建築設計、公共空間與數位實作作品集">
-  <title>Samuel HUANG — Architecture Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="theme-color" content="#f5f3ee">
+  <title>HARO-STUDIO — 黃同榮作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/site.css"><script src="assets/app.js" defer></script>
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/app.js" defer></script>
 </head>
-<body>
-  <header class="topbar"><a class="wordmark" href="index.html">HARO-STUDIO</a><nav><a class="active" href="index.html" data-zh="作品" data-en="WORK">作品</a><a href="about.html" data-zh="關於" data-en="ABOUT">關於</a></nav><button class="lang" data-language aria-label="切換語言">EN</button></header>
-  <main>
-    <section class="hero wrap">
-      <div class="hero-top"><p class="eyebrow" data-zh="建築設計・空間研究・數位實作" data-en="ARCHITECTURE · SPATIAL RESEARCH · DIGITAL MAKING">建築設計・空間研究・數位實作</p><span class="index-no">PORTFOLIO / 2026</span></div>
-      <h1><span>Samuel HUANG</span><span class="name-zh">黃同榮</span></h1>
-      <div class="hero-bottom"><p data-zh="以空間回應地方、日常與共同生活。" data-en="Exploring how space can respond to place, everyday life, and shared experience.">以空間回應地方、日常與共同生活。</p><a class="text-link" href="#selected-work"><span data-zh="瀏覽作品" data-en="EXPLORE SELECTED WORK">瀏覽作品</span><span>↘</span></a></div>
-      <div class="hero-rule"></div>
+<body class="showcase-page">
+  <header class="showcase-header">
+    <a class="showcase-brand" href="index.html">HARO-STUDIO</a>
+    <p class="showcase-edition">ARCHITECTURE PORTFOLIO <span>—</span> 2026</p>
+    <a class="showcase-about" href="about.html">關於我 <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="showcase-layout">
+    <aside class="work-index" aria-label="作品索引">
+      <div class="index-heading"><span class="micro-label">INDEX</span><span class="index-count" id="index-count">01 — 03</span></div>
+      <nav id="project-index" class="index-list" aria-label="選擇作品"></nav>
+      <div class="index-signature">
+        <span class="micro-label">DESIGNER</span>
+        <p>Samuel HUANG<br>黃同榮</p>
+        <span class="signature-note">建築設計・空間研究<br>數位實作</span>
+      </div>
+    </aside>
+
+    <section class="showcase-main" aria-labelledby="main-heading">
+      <div class="showcase-heading">
+        <p class="micro-label">設計・建造・地方</p>
+        <h1 id="main-heading">讓空間連結<br><em>地方與生活</em></h1>
+      </div>
+
+      <div class="image-stage" id="image-stage" aria-live="polite">
+        <img id="active-project-image" src="assets/images/taichung-livehouse2.webp" alt="台中流行音樂產業園區夜間建築渲染圖">
+        <div class="stage-shade" aria-hidden="true"></div>
+        <div class="stage-label"><span>SELECTED WORK</span><span id="stage-number">01 / 03</span></div>
+        <a id="stage-link" class="stage-open" href="work.html?id=music-park" aria-label="查看目前作品">↗</a>
+      </div>
+
+      <div class="carousel-controls" aria-label="作品圖片控制">
+        <div class="carousel-arrows">
+          <button id="previous-project" class="arrow-button" type="button" aria-label="上一件作品">←</button>
+          <button id="next-project" class="arrow-button" type="button" aria-label="下一件作品">→</button>
+        </div>
+        <div id="carousel-dots" class="carousel-dots" aria-label="選擇作品圖片"></div>
+        <button id="pause-carousel" class="pause-button" type="button" aria-pressed="false">暫停輪播</button>
+      </div>
     </section>
-    <section id="selected-work" class="work-section wrap">
-      <div class="section-head"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 data-zh="精選作品" data-en="Selected Work">精選作品</h2></div><p class="section-note" data-zh="三個尺度，三種與環境建立關係的方式。" data-en="Three scales, three ways of relating to context.">三個尺度，三種與環境建立關係的方式。</p></div>
-      <div id="project-grid" class="project-grid" aria-live="polite"></div>
-    </section>
-    <section class="statement wrap"><p class="eyebrow">A NOTE ON PRACTICE</p><p class="statement-text" data-zh="從場域閱讀出發，透過設計、建造與觀察，尋找空間如何成為人與地方之間的媒介。" data-en="Beginning with close readings of place, I use design, making, and observation to explore how space can mediate between people and their surroundings.">從場域閱讀出發，透過設計、建造與觀察，尋找空間如何成為人與地方之間的媒介。</p></section>
+
+    <aside class="project-panel" id="project-information" aria-live="polite" aria-label="目前作品資訊">
+      <div class="panel-topline"><span class="micro-label">PROJECT NOTE</span><span class="panel-mark" id="panel-mark">01</span></div>
+      <div class="panel-content">
+        <p id="project-category" class="project-category">畢業設計・文化設施</p>
+        <h2 id="project-title">台中流行音樂產業園區</h2>
+        <p id="project-location" class="project-location">台中，台灣 <span>·</span> 2025</p>
+        <div class="panel-rule"></div>
+        <p id="project-description" class="project-description">整合展演、錄音、教育與社群空間，探索音樂產業如何重新連結城市中的歷史場域。</p>
+        <a id="project-detail-link" class="detail-link" href="work.html?id=music-park">閱讀作品介紹 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="panel-footer"><span class="micro-label">TAIPEI, TAIWAN</span><span>© 2026</span></div>
+    </aside>
   </main>
-  <footer class="footer wrap"><span>© 2026 SAMUEL HUANG 黃同榮</span><a href="about.html" data-zh="個人簡介 ↗" data-en="ABOUT ↗">個人簡介 ↗</a><span>TAIPEI, TAIWAN</span></footer>
-</body></html>
+</body>
+</html>
