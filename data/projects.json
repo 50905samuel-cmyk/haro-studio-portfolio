@@ -1,0 +1,44 @@
+[
+  {
+    "id": "music-park",
+    "number": "01",
+    "titleZh": "台中流行音樂產業園區",
+    "titleEn": "Taichung Popular Music Industry Park",
+    "typeZh": "畢業設計・文化設施",
+    "typeEn": "Graduation Design · Cultural Facility",
+    "year": "2025",
+    "locationZh": "台中，台灣",
+    "locationEn": "Taichung, Taiwan",
+    "descriptionZh": "以台中車站周邊舊城區為基地，整合展演、錄音、教育與社群空間，探索音樂產業如何重新連結城市中的歷史場域。",
+    "descriptionEn": "Set in Taichung's historic center near the railway station, the project brings performance, recording, education, and community spaces together to reconnect music culture with the city's layered urban context.",
+    "visual": "music"
+  },
+  {
+    "id": "under-bridge",
+    "number": "02",
+    "titleZh": "建國高架橋下公共空間更新",
+    "titleEn": "Public Space beneath Jianguo Expressway",
+    "typeZh": "都市設計・公共空間",
+    "typeEn": "Urban Design · Public Space",
+    "year": "2026",
+    "locationZh": "台北，台灣",
+    "locationEn": "Taipei, Taiwan",
+    "descriptionZh": "重新思考建國高架橋下的公共設施與日常使用，將線性橋下空間轉化為可停留、活動與交會的城市場域。",
+    "descriptionEn": "Reconsiders public amenities and everyday use beneath the Jianguo Expressway, transforming a linear undercroft into an urban place for staying, activity, and encounter.",
+    "visual": "bridge"
+  },
+  {
+    "id": "taitung-build",
+    "number": "03",
+    "titleZh": "台東布農部落義築",
+    "titleEn": "Community-Built Structures in Taitung",
+    "typeZh": "共同建造・社區參與",
+    "typeEn": "Collective Building · Community Participation",
+    "year": "2024",
+    "locationZh": "台東，台灣",
+    "locationEn": "Taitung, Taiwan",
+    "descriptionZh": "參與布農部落義築，與團隊共同完成兩座涼亭與一座露營平台。從現地條件、施工協作到天候應變，學習建築如何在共同實作中回應地方生活。",
+    "descriptionEn": "Worked with a team to build two pavilions and a camping platform with a Bunun community. The process brought together site conditions, collective construction, and weather response, showing how architecture can emerge through shared work.",
+    "visual": "taitung"
+  }
+]
