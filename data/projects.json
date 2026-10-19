@@ -11,7 +11,9 @@
     "locationEn": "Taichung, Taiwan",
     "descriptionZh": "以台中車站周邊舊城區為基地，整合展演、錄音、教育與社群空間，探索音樂產業如何重新連結城市中的歷史場域。",
     "descriptionEn": "Set in Taichung's historic center near the railway station, the project brings performance, recording, education, and community spaces together to reconnect music culture with the city's layered urban context.",
-    "visual": "music"
+    "image": "assets/images/taichung-livehouse2.webp",
+    "imageAltZh": "台中流行音樂產業園區夜間建築渲染圖",
+    "imageAltEn": "Night rendering for the Taichung Popular Music Industry Park"
   },
   {
     "id": "under-bridge",
@@ -25,7 +27,9 @@
     "locationEn": "Taipei, Taiwan",
     "descriptionZh": "重新思考建國高架橋下的公共設施與日常使用，將線性橋下空間轉化為可停留、活動與交會的城市場域。",
     "descriptionEn": "Reconsiders public amenities and everyday use beneath the Jianguo Expressway, transforming a linear undercroft into an urban place for staying, activity, and encounter.",
-    "visual": "bridge"
+    "image": "assets/images/jianguo-underpass.webp",
+    "imageAltZh": "建國高架橋下公共運動與活動空間的設計渲染圖",
+    "imageAltEn": "Rendering of a public recreation space under the Jianguo Expressway"
   },
   {
     "id": "taitung-build",
@@ -39,6 +43,8 @@
     "locationEn": "Taitung, Taiwan",
     "descriptionZh": "參與布農部落義築，與團隊共同完成兩座涼亭與一座露營平台。從現地條件、施工協作到天候應變，學習建築如何在共同實作中回應地方生活。",
     "descriptionEn": "Worked with a team to build two pavilions and a camping platform with a Bunun community. The process brought together site conditions, collective construction, and weather response, showing how architecture can emerge through shared work.",
-    "visual": "taitung"
+    "image": "assets/images/taitung-pavilion.webp",
+    "imageAltZh": "台東布農部落義築完成的涼亭與木平台",
+    "imageAltEn": "Completed pavilion and timber platform built with a Bunun community in Taitung"
   }
 ]

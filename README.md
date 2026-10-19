@@ -12,7 +12,7 @@ A bilingual architecture portfolio for Samuel HUANG (黃同榮), built as a ligh
 
 Edit `data/projects.json` to change project titles, descriptions, locations, years, or the graphic key. The page layout and project content are separate: JavaScript reads the JSON file and renders the cards and project page. Edit the HTML only when changing the structure, and edit `assets/site.css` to change the visual style.
 
-The current project illustrations are original concept graphics made for the draft. They are clearly identified as concept graphics and should be replaced with the author's project images before final submission.
+Project images are stored in `assets/images/`. The music park rendering, Jianguo underpass rendering, and Taitung pavilion photograph are linked through each project record in `data/projects.json`.
 
 ## Tools
 
