@@ -1,6 +1,6 @@
 # HARO-STUDIO — Architecture Portfolio
 
-A Chinese-language architecture portfolio for Samuel HUANG (黃同榮), built as a lightweight static website. The white, image-led home page rotates through the three project images. Its left-side Works and About links lead to the project index and profile pages.
+An English-language architecture portfolio for Samuel HUANG (黃同榮), built as a lightweight static website. The white, image-led home page rotates through the three project images. Its left-side Works and About links lead to the project index and profile pages. A quiet HARO / Approach list in the right column describes the studio's four principles.
 
 ## Pages
 
@@ -11,9 +11,9 @@ A Chinese-language architecture portfolio for Samuel HUANG (黃同榮), built as
 
 ## Updating project content
 
-Edit `data/projects.json` to update project titles, descriptions, locations, years, image paths, or image alt text. Project order on the home carousel and Works page is calculated from `year`, newest first; the timeline is generated automatically. Keep the Traditional Chinese fields complete. English project fields are retained in the data for the planned bilingual version; the current interface displays Chinese only.
+Edit `data/projects.json` to update project titles, descriptions, locations, years, image paths, or image alt text. Project order on the home carousel and Works page is calculated from `year`, newest first; the timeline is generated automatically. The interface currently reads the English fields (`titleEn`, `descriptionEn`, `locationEn`, `typeEn`, and `imageAltEn`). Chinese fields remain available for a possible bilingual version.
 
-Add project image files to `assets/images/` and update the corresponding `image` path in `data/projects.json`. The JavaScript reads the JSON and updates the home carousel, the complete project list, and the detail pages without requiring routine edits to the HTML structure. The Works page currently displays only the Chinese title and completion year; project category labels can be added later.
+Add project image files to `assets/images/` and update the corresponding `image` path in `data/projects.json`. The JavaScript reads the JSON and updates the home carousel, the complete project list, and the detail pages without requiring routine edits to the HTML structure. The Works page currently displays only the English title and year; project category labels can be added later. Profile text and the HARO principles are presently edited in `about.html` and `index.html`, respectively.
 
 ## Tools
 

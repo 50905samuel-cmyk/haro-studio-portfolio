@@ -1,8 +1,8 @@
 const text = (id) => document.getElementById(id);
 
 const projectLoadMessage = () => location.protocol === 'file:'
-  ? '請使用 VS Code 的 Live Server 開啟網站，或透過已部署的 GitHub Pages 網址預覽作品。'
-  : '作品資料載入失敗，請確認 data/projects.json 已複製到網站資料夾。';
+  ? 'Open this site with VS Code Live Server or view the published GitHub Pages website.'
+  : 'Projects could not be loaded. Check that data/projects.json is in the site folder.';
 
 const newestFirst = (projects) => [...projects].sort((a, b) => Number(b.year) - Number(a.year));
 
@@ -35,14 +35,14 @@ async function renderShowcase() {
       window.setTimeout(() => {
         image.onload = () => image.classList.remove('is-changing');
         image.src = project.image;
-        image.alt = project.imageAltZh || project.titleZh;
+        image.alt = project.imageAltEn || project.titleEn;
         if (image.complete) image.classList.remove('is-changing');
       }, 150);
 
       const detailUrl = `work.html?id=${encodeURIComponent(project.id)}`;
       text('stage-link').href = detailUrl;
-      text('stage-link').setAttribute('aria-label', `閱讀${project.titleZh}作品介紹`);
-      text('project-title').textContent = project.titleZh;
+      text('stage-link').setAttribute('aria-label', `View ${project.titleEn}`);
+      text('project-title').textContent = project.titleEn;
       text('project-title').href = detailUrl;
     };
 
@@ -89,17 +89,17 @@ async function renderWorks() {
         const link = document.createElement('a');
         link.href = `#${item.id}`;
         link.textContent = year;
-        link.setAttribute('aria-label', `前往 ${year} 年作品`);
+        link.setAttribute('aria-label', `Jump to projects from ${year}`);
         years.append(link);
         yearLinks.set(year, link);
       }
       const imageLink = document.createElement('a');
       imageLink.className = 'works-entry-image';
       imageLink.href = detailUrl;
-      imageLink.setAttribute('aria-label', `閱讀${project.titleZh}作品介紹`);
+      imageLink.setAttribute('aria-label', `View ${project.titleEn}`);
       const image = document.createElement('img');
       image.src = project.image;
-      image.alt = project.imageAltZh || project.titleZh;
+      image.alt = project.imageAltEn || project.titleEn;
       image.loading = i === 0 ? 'eager' : 'lazy';
       imageLink.append(image);
 
@@ -107,17 +107,17 @@ async function renderWorks() {
       info.className = 'works-entry-info';
       const titleRow = document.createElement('div');
       const titleLabel = document.createElement('dt');
-      titleLabel.textContent = '作品名稱';
+      titleLabel.textContent = 'Project';
       const titleValue = document.createElement('dd');
       const titleLink = document.createElement('a');
       titleLink.href = detailUrl;
-      titleLink.textContent = project.titleZh;
+      titleLink.textContent = project.titleEn;
       titleValue.append(titleLink);
       titleRow.append(titleLabel, titleValue);
 
       const yearRow = document.createElement('div');
       const yearLabel = document.createElement('dt');
-      yearLabel.textContent = '完成年份';
+      yearLabel.textContent = 'Year';
       const yearValue = document.createElement('dd');
       yearValue.textContent = project.year;
       yearRow.append(yearLabel, yearValue);
@@ -156,13 +156,13 @@ async function renderProjectDetail() {
     const projects = await response.json();
     const project = projects.find((item) => item.id === new URLSearchParams(location.search).get('id')) || projects[0];
     if (!project) throw new Error('No project found');
-    document.title = `${project.titleZh} — HARO-STUDIO`;
+    document.title = `${project.titleEn} — HARO-STUDIO`;
     container.innerHTML = `
-      <p class="eyebrow">${project.number} / ${project.typeZh}</p>
-      <h1>${project.titleZh}</h1>
-      <p class="detail-location">${project.locationZh} <span>·</span> ${project.year}</p>
-      <div class="detail-art"><img src="${project.image}" alt="${project.imageAltZh}"></div>
-      <div class="detail-description"><p class="eyebrow">PROJECT NOTE</p><p>${project.descriptionZh}</p></div>`;
+      <p class="eyebrow">${project.number} / ${project.typeEn}</p>
+      <h1>${project.titleEn}</h1>
+      <p class="detail-location">${project.locationEn} <span>·</span> ${project.year}</p>
+      <div class="detail-art"><img src="${project.image}" alt="${project.imageAltEn}"></div>
+      <div class="detail-description"><p class="eyebrow">PROJECT NOTE</p><p>${project.descriptionEn}</p></div>`;
   } catch (error) {
     container.textContent = projectLoadMessage();
     container.classList.add('load-error');
