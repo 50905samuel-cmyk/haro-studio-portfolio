@@ -16,36 +16,40 @@ async function renderShowcase() {
     const image = text('active-project-image');
     const stage = text('image-stage');
     const pauseButton = text('pause-carousel');
-    const dots = text('carousel-dots');
+    const worksToggle = text('works-toggle');
 
     const setActive = (nextIndex) => {
       active = (nextIndex + projects.length) % projects.length;
       const project = projects[active];
       image.classList.add('is-changing');
       window.setTimeout(() => {
+        image.onload = () => image.classList.remove('is-changing');
         image.src = project.image;
         image.alt = project.imageAltZh || project.titleZh;
-        image.onload = () => image.classList.remove('is-changing');
+        if (image.complete) image.classList.remove('is-changing');
       }, 150);
 
+      const detailUrl = `work.html?id=${encodeURIComponent(project.id)}`;
       text('stage-number').textContent = `${String(active + 1).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}`;
-      text('project-category').textContent = project.typeZh;
+      text('stage-link').href = detailUrl;
+      text('stage-link').setAttribute('aria-label', `閱讀${project.titleZh}作品介紹`);
       text('project-title').textContent = project.titleZh;
-      text('project-location').innerHTML = `${project.locationZh} <span>·</span> ${project.year}`;
-      text('project-description').textContent = project.descriptionZh;
-      text('panel-mark').textContent = String(active + 1).padStart(2, '0');
-      text('stage-link').href = `work.html?id=${encodeURIComponent(project.id)}`;
-      text('project-detail-link').href = `work.html?id=${encodeURIComponent(project.id)}`;
+      text('project-title').href = detailUrl;
+      text('project-detail-link').href = detailUrl;
 
       index.querySelectorAll('[data-project-index]').forEach((button, i) => {
         button.classList.toggle('is-active', i === active);
         button.setAttribute('aria-current', i === active ? 'true' : 'false');
       });
-      dots.querySelectorAll('button').forEach((button, i) => {
-        button.classList.toggle('is-active', i === active);
-        button.setAttribute('aria-label', `顯示第 ${i + 1} 件作品`);
-        button.setAttribute('aria-pressed', i === active ? 'true' : 'false');
-      });
+    };
+
+    const startTimer = () => {
+      window.clearInterval(timer);
+      if (!paused && document.visibilityState === 'visible') {
+        timer = window.setInterval(() => setActive(active + 1), 6500);
+      }
+      pauseButton.textContent = paused ? '播放' : '暫停';
+      pauseButton.setAttribute('aria-pressed', paused ? 'true' : 'false');
     };
 
     projects.forEach((project, i) => {
@@ -53,39 +57,22 @@ async function renderShowcase() {
       item.type = 'button';
       item.className = 'index-item';
       item.dataset.projectIndex = String(i);
-      item.innerHTML = `<span class="index-item-number">${String(i + 1).padStart(2, '0')}</span><span class="index-item-title"></span><span class="index-item-arrow" aria-hidden="true">↗</span>`;
-      item.querySelector('.index-item-title').textContent = project.titleZh;
+      item.textContent = `${String(i + 1).padStart(2, '0')}　${project.titleZh}`;
       item.addEventListener('click', () => {
         setActive(i);
-        restartTimer();
+        index.hidden = true;
+        worksToggle.setAttribute('aria-expanded', 'false');
+        startTimer();
       });
       index.append(item);
-
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'carousel-dot';
-      dot.setAttribute('aria-label', `顯示第 ${i + 1} 件作品`);
-      dot.setAttribute('aria-pressed', 'false');
-      dot.addEventListener('click', () => {
-        setActive(i);
-        restartTimer();
-      });
-      dots.append(dot);
     });
 
-    text('index-count').textContent = `01 — ${String(projects.length).padStart(2, '0')}`;
-    text('previous-project').addEventListener('click', () => { setActive(active - 1); restartTimer(); });
-    text('next-project').addEventListener('click', () => { setActive(active + 1); restartTimer(); });
-
-    const startTimer = () => {
-      window.clearInterval(timer);
-      if (!paused && document.visibilityState === 'visible') {
-        timer = window.setInterval(() => setActive(active + 1), 6500);
-      }
-      pauseButton.textContent = paused ? '播放輪播' : '暫停輪播';
-      pauseButton.setAttribute('aria-pressed', paused ? 'true' : 'false');
-    };
-    const restartTimer = () => startTimer();
+    worksToggle.addEventListener('click', () => {
+      index.hidden = !index.hidden;
+      worksToggle.setAttribute('aria-expanded', String(!index.hidden));
+    });
+    text('previous-project').addEventListener('click', () => { setActive(active - 1); startTimer(); });
+    text('next-project').addEventListener('click', () => { setActive(active + 1); startTimer(); });
     pauseButton.addEventListener('click', () => { paused = !paused; startTimer(); });
     stage.addEventListener('mouseenter', () => window.clearInterval(timer));
     stage.addEventListener('mouseleave', startTimer);
@@ -96,6 +83,7 @@ async function renderShowcase() {
     setActive(0);
     startTimer();
   } catch (error) {
+    index.hidden = false;
     index.innerHTML = '<p class="load-error">作品資料載入失敗，請確認網站已部署並重新整理。</p>';
   }
 }

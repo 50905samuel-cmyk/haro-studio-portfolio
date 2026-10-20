@@ -3,67 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Samuel HUANG 黃同榮 — 建築設計、公共空間與數位實作作品集">
-  <meta name="theme-color" content="#f5f3ee">
+  <meta name="description" content="HARO-STUDIO — Samuel HUANG 黃同榮的建築作品集">
+  <meta name="theme-color" content="#ffffff">
   <title>HARO-STUDIO — 黃同榮作品集</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/site.css">
   <script src="assets/app.js" defer></script>
 </head>
 <body class="showcase-page">
-  <header class="showcase-header">
-    <a class="showcase-brand" href="index.html">HARO-STUDIO</a>
-    <p class="showcase-edition">ARCHITECTURE PORTFOLIO <span>—</span> 2026</p>
-    <a class="showcase-about" href="about.html">關於我 <span aria-hidden="true">↗</span></a>
-  </header>
-
   <main class="showcase-layout">
-    <aside class="work-index" aria-label="作品索引">
-      <div class="index-heading"><span class="micro-label">INDEX</span><span class="index-count" id="index-count">01 — 03</span></div>
-      <nav id="project-index" class="index-list" aria-label="選擇作品"></nav>
-      <div class="index-signature">
-        <span class="micro-label">DESIGNER</span>
-        <p>Samuel HUANG<br>黃同榮</p>
-        <span class="signature-note">建築設計・空間研究<br>數位實作</span>
-      </div>
+    <aside class="work-index">
+      <h1 class="showcase-brand"><a href="index.html">HARO-<br>STUDIO</a></h1>
+      <nav class="primary-navigation" aria-label="主要導覽">
+        <button id="works-toggle" class="text-navigation" type="button" aria-expanded="false" aria-controls="project-index">作品 <span lang="en">Works</span></button>
+        <div id="project-index" class="index-list" aria-label="選擇作品" hidden></div>
+        <a class="text-navigation" href="about.html">關於 <span lang="en">About</span></a>
+      </nav>
+      <p class="index-signature">Samuel HUANG<br>黃同榮</p>
     </aside>
 
-    <section class="showcase-main" aria-labelledby="main-heading">
-      <div class="showcase-heading">
-        <p class="micro-label">設計・建造・地方</p>
-        <h1 id="main-heading">讓空間連結<br><em>地方與生活</em></h1>
+    <section class="showcase-main" aria-label="精選作品">
+      <div class="image-stage" id="image-stage">
+        <a id="stage-link" class="stage-image-link" href="work.html?id=music-park" aria-label="閱讀台中流行音樂產業園區作品介紹">
+          <img id="active-project-image" src="assets/images/taichung-livehouse2.webp" alt="台中流行音樂產業園區夜間建築渲染圖">
+        </a>
       </div>
-
-      <div class="image-stage" id="image-stage" aria-live="polite">
-        <img id="active-project-image" src="assets/images/taichung-livehouse2.webp" alt="台中流行音樂產業園區夜間建築渲染圖">
-        <div class="stage-shade" aria-hidden="true"></div>
-        <div class="stage-label"><span>SELECTED WORK</span><span id="stage-number">01 / 03</span></div>
-        <a id="stage-link" class="stage-open" href="work.html?id=music-park" aria-label="查看目前作品">↗</a>
-      </div>
-
-      <div class="carousel-controls" aria-label="作品圖片控制">
-        <div class="carousel-arrows">
-          <button id="previous-project" class="arrow-button" type="button" aria-label="上一件作品">←</button>
-          <button id="next-project" class="arrow-button" type="button" aria-label="下一件作品">→</button>
+      <div class="showcase-caption">
+        <span id="stage-number" class="stage-number">01 / 03</span>
+        <a id="project-title" class="caption-title" href="work.html?id=music-park">台中流行音樂產業園區</a>
+        <div class="carousel-controls" aria-label="作品照片控制">
+          <button id="previous-project" type="button" aria-label="上一件作品">上一件</button>
+          <button id="next-project" type="button" aria-label="下一件作品">下一件</button>
+          <button id="pause-carousel" type="button" aria-pressed="false">暫停</button>
         </div>
-        <div id="carousel-dots" class="carousel-dots" aria-label="選擇作品圖片"></div>
-        <button id="pause-carousel" class="pause-button" type="button" aria-pressed="false">暫停輪播</button>
       </div>
     </section>
 
-    <aside class="project-panel" id="project-information" aria-live="polite" aria-label="目前作品資訊">
-      <div class="panel-topline"><span class="micro-label">PROJECT NOTE</span><span class="panel-mark" id="panel-mark">01</span></div>
-      <div class="panel-content">
-        <p id="project-category" class="project-category">畢業設計・文化設施</p>
-        <h2 id="project-title">台中流行音樂產業園區</h2>
-        <p id="project-location" class="project-location">台中，台灣 <span>·</span> 2025</p>
-        <div class="panel-rule"></div>
-        <p id="project-description" class="project-description">整合展演、錄音、教育與社群空間，探索音樂產業如何重新連結城市中的歷史場域。</p>
-        <a id="project-detail-link" class="detail-link" href="work.html?id=music-park">閱讀作品介紹 <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="panel-footer"><span class="micro-label">TAIPEI, TAIWAN</span><span>© 2026</span></div>
+    <aside class="project-panel" aria-label="其他內容">
+      <nav class="secondary-navigation" aria-label="其他頁面">
+        <a href="about.html">個人簡介 <span aria-hidden="true">↗</span></a>
+        <a id="project-detail-link" href="work.html?id=music-park">作品介紹 <span aria-hidden="true">↗</span></a>
+      </nav>
+      <p class="side-label">ARCHITECTURE<br>PORTFOLIO / 2026</p>
     </aside>
   </main>
 </body>

@@ -1,10 +1,10 @@
 # HARO-STUDIO — Architecture Portfolio
 
-A Chinese-language architecture portfolio for Samuel HUANG (黃同榮), built as a lightweight static website. The editorial home page places a project index on the left, a rotating project image in the center, and project notes on the right.
+A Chinese-language architecture portfolio for Samuel HUANG (黃同榮), built as a lightweight static website. The white, image-led home page keeps the project image central and uses text links for navigation. Select Works to reveal the project index; the image changes automatically and can also be changed with the Previous, Next, and Pause controls.
 
 ## Pages
 
-- `index.html` — portfolio home page with a selectable project index and automatic image carousel
+- `index.html` — minimal portfolio home page with a text-based project index and automatic image carousel
 - `work.html` — individual project detail page, selected with `?id=`
 - `about.html` — profile, education, and areas of interest
 
@@ -12,7 +12,7 @@ A Chinese-language architecture portfolio for Samuel HUANG (黃同榮), built as
 
 Edit `data/projects.json` to update project titles, descriptions, locations, years, image paths, or image alt text. Keep the Traditional Chinese fields complete. English project fields are retained in the data for the planned bilingual version; the current interface displays Chinese only.
 
-Add project image files to `assets/images/` and update the corresponding `image` path in `data/projects.json`. The JavaScript reads the JSON and updates the home page index, carousel, project notes, and detail pages without requiring routine edits to the HTML structure.
+Add project image files to `assets/images/` and update the corresponding `image` path in `data/projects.json`. The JavaScript reads the JSON and updates the home page project index, carousel caption, and detail pages without requiring routine edits to the HTML structure.
 
 ## Tools
 
