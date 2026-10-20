@@ -1,22 +1,32 @@
 const text = (id) => document.getElementById(id);
 
+const projectLoadMessage = () => location.protocol === 'file:'
+  ? '請使用 VS Code 的 Live Server 開啟網站，或透過已部署的 GitHub Pages 網址預覽作品。'
+  : '作品資料載入失敗，請確認 data/projects.json 已複製到網站資料夾。';
+
+const newestFirst = (projects) => [...projects].sort((a, b) => Number(b.year) - Number(a.year));
+
+async function loadProjects() {
+  const response = await fetch('data/projects.json');
+  if (!response.ok) throw new Error('Project data could not be loaded');
+  const projects = await response.json();
+  if (!Array.isArray(projects) || projects.length === 0) throw new Error('No projects found');
+  return projects;
+}
+
 async function renderShowcase() {
-  const index = text('project-index');
-  if (!index) return;
+  const stage = text('image-stage');
+  if (!stage) return;
 
   try {
-    const response = await fetch('data/projects.json');
-    if (!response.ok) throw new Error('Project data could not be loaded');
-    const projects = await response.json();
-    if (!Array.isArray(projects) || projects.length === 0) throw new Error('No projects found');
-
-    let active = 0;
-    let paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let timer;
+    const projects = newestFirst(await loadProjects());
     const image = text('active-project-image');
-    const stage = text('image-stage');
-    const pauseButton = text('pause-carousel');
-    const worksToggle = text('works-toggle');
+    const showcase = stage.closest('.showcase-main');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let active = 0;
+    let timer;
+    let isHovered = false;
+    let hasFocus = false;
 
     const setActive = (nextIndex) => {
       active = (nextIndex + projects.length) % projects.length;
@@ -30,61 +40,110 @@ async function renderShowcase() {
       }, 150);
 
       const detailUrl = `work.html?id=${encodeURIComponent(project.id)}`;
-      text('stage-number').textContent = `${String(active + 1).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}`;
       text('stage-link').href = detailUrl;
       text('stage-link').setAttribute('aria-label', `閱讀${project.titleZh}作品介紹`);
       text('project-title').textContent = project.titleZh;
       text('project-title').href = detailUrl;
-      text('project-detail-link').href = detailUrl;
-
-      index.querySelectorAll('[data-project-index]').forEach((button, i) => {
-        button.classList.toggle('is-active', i === active);
-        button.setAttribute('aria-current', i === active ? 'true' : 'false');
-      });
     };
 
     const startTimer = () => {
       window.clearInterval(timer);
-      if (!paused && document.visibilityState === 'visible') {
+      if (!reducedMotion && !isHovered && !hasFocus && document.visibilityState === 'visible') {
         timer = window.setInterval(() => setActive(active + 1), 6500);
       }
-      pauseButton.textContent = paused ? '播放' : '暫停';
-      pauseButton.setAttribute('aria-pressed', paused ? 'true' : 'false');
     };
 
-    projects.forEach((project, i) => {
-      const item = document.createElement('button');
-      item.type = 'button';
-      item.className = 'index-item';
-      item.dataset.projectIndex = String(i);
-      item.textContent = `${String(i + 1).padStart(2, '0')}　${project.titleZh}`;
-      item.addEventListener('click', () => {
-        setActive(i);
-        index.hidden = true;
-        worksToggle.setAttribute('aria-expanded', 'false');
-        startTimer();
-      });
-      index.append(item);
+    showcase.addEventListener('mouseenter', () => { isHovered = true; startTimer(); });
+    showcase.addEventListener('mouseleave', () => { isHovered = false; startTimer(); });
+    showcase.addEventListener('focusin', () => { hasFocus = true; startTimer(); });
+    showcase.addEventListener('focusout', (event) => {
+      if (!showcase.contains(event.relatedTarget)) { hasFocus = false; startTimer(); }
     });
-
-    worksToggle.addEventListener('click', () => {
-      index.hidden = !index.hidden;
-      worksToggle.setAttribute('aria-expanded', String(!index.hidden));
-    });
-    text('previous-project').addEventListener('click', () => { setActive(active - 1); startTimer(); });
-    text('next-project').addEventListener('click', () => { setActive(active + 1); startTimer(); });
-    pauseButton.addEventListener('click', () => { paused = !paused; startTimer(); });
-    stage.addEventListener('mouseenter', () => window.clearInterval(timer));
-    stage.addEventListener('mouseleave', startTimer);
-    stage.addEventListener('focusin', () => window.clearInterval(timer));
-    stage.addEventListener('focusout', startTimer);
     document.addEventListener('visibilitychange', startTimer);
 
     setActive(0);
     startTimer();
   } catch (error) {
-    index.hidden = false;
-    index.innerHTML = '<p class="load-error">作品資料載入失敗，請確認網站已部署並重新整理。</p>';
+    const notice = document.createElement('p');
+    notice.className = 'load-error';
+    notice.textContent = projectLoadMessage();
+    stage.after(notice);
+  }
+}
+
+async function renderWorks() {
+  const list = text('works-list');
+  if (!list) return;
+
+  try {
+    const projects = newestFirst(await loadProjects());
+    const years = text('works-years');
+    const yearLinks = new Map();
+    projects.forEach((project, i) => {
+      const detailUrl = `work.html?id=${encodeURIComponent(project.id)}`;
+      const item = document.createElement('article');
+      item.className = 'works-entry';
+      const year = String(project.year);
+      if (!yearLinks.has(year)) {
+        item.id = `year-${encodeURIComponent(year)}`;
+        const link = document.createElement('a');
+        link.href = `#${item.id}`;
+        link.textContent = year;
+        link.setAttribute('aria-label', `前往 ${year} 年作品`);
+        years.append(link);
+        yearLinks.set(year, link);
+      }
+      const imageLink = document.createElement('a');
+      imageLink.className = 'works-entry-image';
+      imageLink.href = detailUrl;
+      imageLink.setAttribute('aria-label', `閱讀${project.titleZh}作品介紹`);
+      const image = document.createElement('img');
+      image.src = project.image;
+      image.alt = project.imageAltZh || project.titleZh;
+      image.loading = i === 0 ? 'eager' : 'lazy';
+      imageLink.append(image);
+
+      const info = document.createElement('dl');
+      info.className = 'works-entry-info';
+      const titleRow = document.createElement('div');
+      const titleLabel = document.createElement('dt');
+      titleLabel.textContent = '作品名稱';
+      const titleValue = document.createElement('dd');
+      const titleLink = document.createElement('a');
+      titleLink.href = detailUrl;
+      titleLink.textContent = project.titleZh;
+      titleValue.append(titleLink);
+      titleRow.append(titleLabel, titleValue);
+
+      const yearRow = document.createElement('div');
+      const yearLabel = document.createElement('dt');
+      yearLabel.textContent = '完成年份';
+      const yearValue = document.createElement('dd');
+      yearValue.textContent = project.year;
+      yearRow.append(yearLabel, yearValue);
+      info.append(titleRow, yearRow);
+      item.append(imageLink, info);
+      list.append(item);
+    });
+
+    const setActiveYear = (year) => {
+      yearLinks.forEach((link, key) => {
+        if (key === year) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    const updateActiveYear = () => {
+      const anchors = [...list.querySelectorAll('.works-entry[id]')];
+      const current = anchors.reduce((selected, anchor) =>
+        anchor.getBoundingClientRect().top <= 180 ? anchor : selected, anchors[0]);
+      if (current) setActiveYear(current.id.slice(5));
+    };
+    window.addEventListener('scroll', updateActiveYear, { passive: true });
+    window.addEventListener('resize', updateActiveYear);
+    updateActiveYear();
+  } catch (error) {
+    list.textContent = projectLoadMessage();
+    list.classList.add('load-error');
   }
 }
 
@@ -105,9 +164,11 @@ async function renderProjectDetail() {
       <div class="detail-art"><img src="${project.image}" alt="${project.imageAltZh}"></div>
       <div class="detail-description"><p class="eyebrow">PROJECT NOTE</p><p>${project.descriptionZh}</p></div>`;
   } catch (error) {
-    container.innerHTML = '<p class="load-error">作品資料載入失敗，請確認網站已部署並重新整理。</p>';
+    container.textContent = projectLoadMessage();
+    container.classList.add('load-error');
   }
 }
 
 renderShowcase();
+renderWorks();
 renderProjectDetail();
